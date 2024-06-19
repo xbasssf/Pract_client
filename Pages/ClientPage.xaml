@@ -1,0 +1,68 @@
+﻿<Page x:Class="Pract_client.Pages.ClientPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pract_client.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ClientPage">
+
+    <Grid Background="AliceBlue" Margin="-10,0,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="3" Margin="114,26,114,10" Grid.RowSpan="2">
+            <StackPanel>
+                <Button Cursor="Hand" Content="Личный кабинет"  BorderThickness="2" Width="116" Height="24" FontFamily="Bahnschrift" FontSize="10" FontWeight="Light" Background="#FFEED4FE" Click="AddIngredientButton_Click"/>
+                <ListView x:Name="LvClient" Width="auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header=";" DisplayMemberBinding="{Binding Id_Client}" Width="auto"/>
+                            <GridViewColumn Header="Фотография" Width="160">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Width="90" Height="95">
+                                            <Image.Source>
+                                                <Binding Path="Photo">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/images/3.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                </Binding>
+                                            </Image.Source>
+                                        </Image>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding First_Name}" Width="auto"/>
+                            <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="auto"/>
+                            <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Patronomyc}" Width="auto"/>
+                            <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone_Number}" Width="auto"/>
+                            <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="auto"/>
+                            <GridViewColumn Header="Действие" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button x:Name="BtnDelete" Content="Удалить" Click="BtnDelete_Click" Margin="0 0 5 0" Background="Red"/>
+                                            <Button x:Name="BtnEdit" Content="Редактировать" Click="BtnEdit_Click" Background="Green"/>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+        <Button x:Name="BtnAdd" Content="Добавить" Click="BtnAdd_Click" Background="Beige" Grid.Column="1" Margin="172,0,286,0" Grid.Row="2"/>
+        <Button x:Name="BtnExit" Content="Выйти" Click="BtnExit_Click" Background="Beige" Grid.Column="1" Margin="292,0,167,0" Grid.Row="2"/>
+    </Grid>
+</Page>

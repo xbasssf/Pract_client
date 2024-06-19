@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище KlientModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_Client" />
+          </Key>
+          <Property Name="Id_Client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Patronomyc" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone_Number" Type="nvarchar" MaxLength="12" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status_ID" Type="int" />
+          <Property Name="Id_log_client" Type="int" />
+          <Property Name="Photo" Type="image" />
+        </EntityType>
+        <EntityType Name="Log_client">
+          <Key>
+            <PropertyRef Name="Id_log_client" />
+          </Key>
+          <Property Name="Id_log_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Log_rielt">
+          <Key>
+            <PropertyRef Name="Id_log_rielt" />
+          </Key>
+          <Property Name="Id_log_rielt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Rielt">
+          <Key>
+            <PropertyRef Name="Id_Rielt" />
+          </Key>
+          <Property Name="Id_Rielt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DealShare" Type="int" Nullable="false" />
+          <Property Name="Status_ID" Type="int" />
+          <Property Name="Id_log_rielt" Type="int" />
+          <Property Name="Photo" Type="image" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK_Client_Log_client">
+          <End Role="Log_client" Type="Self.Log_client" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log_client">
+              <PropertyRef Name="Id_log_client" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Id_log_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rielt_Log_rielt">
+          <End Role="Log_rielt" Type="Self.Log_rielt" Multiplicity="0..1" />
+          <End Role="Rielt" Type="Self.Rielt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log_rielt">
+              <PropertyRef Name="Id_log_rielt" />
+            </Principal>
+            <Dependent Role="Rielt">
+              <PropertyRef Name="Id_log_rielt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rielt_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Rielt" Type="Self.Rielt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Rielt">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище KlientModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log_client" EntityType="Self.Log_client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log_rielt" EntityType="Self.Log_rielt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rielt" EntityType="Self.Rielt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Client_Log_client" Association="Self.FK_Client_Log_client">
+            <End Role="Log_client" EntitySet="Log_client" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Status" Association="Self.FK_Client_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rielt_Log_rielt" Association="Self.FK_Rielt_Log_rielt">
+            <End Role="Log_rielt" EntitySet="Log_rielt" />
+            <End Role="Rielt" EntitySet="Rielt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rielt_Status" Association="Self.FK_Rielt_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Rielt" EntitySet="Rielt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KlientModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id_Client" />
+          </Key>
+          <Property Name="Id_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronomyc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_Number" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status_ID" Type="Int32" />
+          <Property Name="Id_log_client" Type="Int32" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Log_client" Relationship="Self.FK_Client_Log_client" FromRole="Client" ToRole="Log_client" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Client_Status" FromRole="Client" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="Log_client">
+          <Key>
+            <PropertyRef Name="Id_log_client" />
+          </Key>
+          <Property Name="Id_log_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Log_client" FromRole="Log_client" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Log_rielt">
+          <Key>
+            <PropertyRef Name="Id_log_rielt" />
+          </Key>
+          <Property Name="Id_log_rielt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Rielt" Relationship="Self.FK_Rielt_Log_rielt" FromRole="Log_rielt" ToRole="Rielt" />
+        </EntityType>
+        <EntityType Name="Rielt">
+          <Key>
+            <PropertyRef Name="Id_Rielt" />
+          </Key>
+          <Property Name="Id_Rielt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DealShare" Type="Int32" Nullable="false" />
+          <Property Name="Status_ID" Type="Int32" />
+          <Property Name="Id_log_rielt" Type="Int32" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Log_rielt" Relationship="Self.FK_Rielt_Log_rielt" FromRole="Rielt" ToRole="Log_rielt" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Rielt_Status" FromRole="Rielt" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Status" FromRole="Status" ToRole="Client" />
+          <NavigationProperty Name="Rielt" Relationship="Self.FK_Rielt_Status" FromRole="Status" ToRole="Rielt" />
+        </EntityType>
+        <Association Name="FK_Client_Log_client">
+          <End Role="Log_client" Type="Self.Log_client" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log_client">
+              <PropertyRef Name="Id_log_client" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Id_log_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rielt_Log_rielt">
+          <End Role="Log_rielt" Type="Self.Log_rielt" Multiplicity="0..1" />
+          <End Role="Rielt" Type="Self.Rielt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log_rielt">
+              <PropertyRef Name="Id_log_rielt" />
+            </Principal>
+            <Dependent Role="Rielt">
+              <PropertyRef Name="Id_log_rielt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rielt_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Rielt" Type="Self.Rielt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Status_ID" />
+            </Principal>
+            <Dependent Role="Rielt">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KlientEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Log_client" EntityType="Self.Log_client" />
+          <EntitySet Name="Log_rielt" EntityType="Self.Log_rielt" />
+          <EntitySet Name="Rielt" EntityType="Self.Rielt" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <AssociationSet Name="FK_Client_Log_client" Association="Self.FK_Client_Log_client">
+            <End Role="Log_client" EntitySet="Log_client" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Status" Association="Self.FK_Client_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rielt_Log_rielt" Association="Self.FK_Rielt_Log_rielt">
+            <End Role="Log_rielt" EntitySet="Log_rielt" />
+            <End Role="Rielt" EntitySet="Rielt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rielt_Status" Association="Self.FK_Rielt_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Rielt" EntitySet="Rielt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище KlientModelContainer" CdmEntityContainer="KlientEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="KlientModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id_Client" ColumnName="Id_Client" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronomyc" ColumnName="Patronomyc" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Id_log_client" ColumnName="Id_log_client" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log_client">
+            <EntityTypeMapping TypeName="KlientModel.Log_client">
+              <MappingFragment StoreEntitySet="Log_client">
+                <ScalarProperty Name="Id_log_client" ColumnName="Id_log_client" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log_rielt">
+            <EntityTypeMapping TypeName="KlientModel.Log_rielt">
+              <MappingFragment StoreEntitySet="Log_rielt">
+                <ScalarProperty Name="Id_log_rielt" ColumnName="Id_log_rielt" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rielt">
+            <EntityTypeMapping TypeName="KlientModel.Rielt">
+              <MappingFragment StoreEntitySet="Rielt">
+                <ScalarProperty Name="Id_Rielt" ColumnName="Id_Rielt" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DealShare" ColumnName="DealShare" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Id_log_rielt" ColumnName="Id_log_rielt" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="KlientModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
